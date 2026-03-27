@@ -77,7 +77,7 @@ cd "$WORK_DIR"
 START=$(date +%s)
 PROMPT=$(cat prompt.txt)
 
-claude -p "$PROMPT" --output-format json > /tmp/claude_output.json 2>&1 || true
+claude -p "$PROMPT" --output-format json --dangerously-skip-permissions > /tmp/claude_output.json 2>&1 || true
 
 END=$(date +%s)
 WALL_TIME=$((END - START))
@@ -88,9 +88,12 @@ echo "Running verification..."
 # Run verification
 VERIFY_RESULT=$(bash verify.sh 2>/dev/null || echo '{"error": "verification failed"}')
 
-# Extract token usage from Claude output (if available)
-TOKENS_IN=$(jq -r '.usage.input_tokens // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
+# Extract token usage from Claude output
+# input_tokens + cache_creation + cache_read = total input context
+TOKENS_IN=$(jq -r '(.usage.input_tokens // 0) + (.usage.cache_creation_input_tokens // 0) + (.usage.cache_read_input_tokens // 0)' /tmp/claude_output.json 2>/dev/null || echo "0")
 TOKENS_OUT=$(jq -r '.usage.output_tokens // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
+COST_USD=$(jq -r '.total_cost_usd // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
+NUM_TURNS=$(jq -r '.num_turns // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
 
 # Build final result
 RESULT=$(echo "$VERIFY_RESULT" | jq \
@@ -100,13 +103,17 @@ RESULT=$(echo "$VERIFY_RESULT" | jq \
   --argjson wt "$WALL_TIME" \
   --argjson ti "$TOKENS_IN" \
   --argjson to "$TOKENS_OUT" \
+  --argjson cost "$COST_USD" \
+  --argjson turns "$NUM_TURNS" \
   '. + {
     scenario: $scenario,
     tier: $tier,
     tier_name: $tier_name,
     wall_time_seconds: $wt,
     tokens_in: $ti,
-    tokens_out: $to
+    tokens_out: $to,
+    cost_usd: $cost,
+    num_turns: $turns
   }')
 
 # Save result
