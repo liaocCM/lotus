@@ -1,0 +1,25 @@
+id: s2-react-feature
+name: "React/Next.js Frontend Feature"
+description: "Add a searchable, paginated data table component with sorting, filtering, and responsive design in a Next.js + TypeScript + Tailwind project."
+category: frontend-development
+difficulty: medium
+stack:
+  language: typescript
+  framework: next
+prompt: "Build a reusable DataTable component with search, column sorting, pagination, and responsive layout. Use Tailwind for styling."
+acceptance_criteria:
+  - "DataTable renders with sample data"
+  - "Search filters rows in real-time"
+  - "Column headers are clickable for sorting"
+  - "Pagination works with configurable page size"
+  - "Responsive on mobile"
+quality_rubric:
+  correctness: "All interactions work without errors"
+  completeness: "Search, sort, pagination, responsive all implemented"
+  code_style: "Clean component API, proper TypeScript types"
+  test_coverage: "Component tests for key interactions"
+  efficiency: "No unnecessary re-renders, debounced search"
+competitors:
+  - minimax-frontend-dev
+  - gstack
+  - superpowers

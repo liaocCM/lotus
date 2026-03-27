@@ -1,0 +1,22 @@
+id: s4-multi-team-pipeline
+name: "Multi-Team Pipeline Orchestration"
+description: "Chain 3 agent teams (architecture, implementation, QA) into a sequential pipeline with structured handoffs."
+category: orchestration
+difficulty: hard
+stack:
+  language: any
+prompt: "Set up a pipeline: Team 1 (architecture) produces a design doc, Team 2 (implementation) builds from the design, Team 3 (QA) reviews and tests. Each team should have isolated context and structured handoffs."
+acceptance_criteria:
+  - "Pipeline definition exists with 3 stages"
+  - "Each stage has clear input/output contracts"
+  - "Handoff files are structured (not free-form)"
+  - "Human review gate exists between stages"
+  - "Pipeline can be re-run from any stage"
+quality_rubric:
+  correctness: "Pipeline executes end-to-end without errors"
+  completeness: "All 3 stages defined with proper handoffs"
+  code_style: "Clean pipeline definition, well-documented"
+  test_coverage: "N/A"
+  efficiency: "Minimal token waste between stages"
+competitors:
+  - o-team

@@ -20,3 +20,9 @@ lotus:
   conflicts_with: []
   pairs_well_with:
     - minimax-fullstack-dev
+benchmarks:
+  - scenario: s2-react-feature
+    tokens_in: 6000
+    tokens_out: 4000
+    wall_time_seconds: 25
+    quality_score: 4.0

@@ -1,0 +1,22 @@
+id: s3-greenfield-bootstrap
+name: "Greenfield Project Bootstrap"
+description: "Set up a complete AI agent team configuration for a new Go backend project from scratch."
+category: project-setup
+difficulty: easy
+stack:
+  language: go
+prompt: "I'm starting a new Go backend API project. Set up the AI coding assistant configuration — agents, skills, rules, CLAUDE.md — so I have a productive dev workflow from day one."
+acceptance_criteria:
+  - "CLAUDE.md exists with project-specific rules"
+  - "At least 3 agent roles defined"
+  - "Skills cover core workflows (commit, review, test)"
+  - "Configuration is coherent (no conflicts or redundancy)"
+quality_rubric:
+  correctness: "All config files are valid and parseable"
+  completeness: "Covers planning, coding, review, and testing workflows"
+  code_style: "Clean, well-organized .claude/ directory"
+  test_coverage: "N/A"
+  efficiency: "Minimal config — no bloat or redundant agents"
+competitors:
+  - a-team
+  - d-team

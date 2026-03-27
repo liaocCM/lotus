@@ -26,4 +26,12 @@ lotus:
   tier: recommended
   notes: "Meta-agent that generates custom agent teams via interview. Zero dependencies."
   conflicts_with: []
-  pairs_well_with: []
+  pairs_well_with:
+    - d-team
+    - o-team
+benchmarks:
+  - scenario: s3-greenfield-bootstrap
+    tokens_in: 20000
+    tokens_out: 15000
+    wall_time_seconds: 90
+    quality_score: 4.5

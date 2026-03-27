@@ -31,3 +31,14 @@ lotus:
   conflicts_with:
     - superpowers
   pairs_well_with: []
+benchmarks:
+  - scenario: s1-go-crud-api
+    tokens_in: 15000
+    tokens_out: 10000
+    wall_time_seconds: 60
+    quality_score: 4.2
+  - scenario: s2-react-feature
+    tokens_in: 14000
+    tokens_out: 9000
+    wall_time_seconds: 55
+    quality_score: 3.8

@@ -26,8 +26,17 @@ type Entry struct {
 	Stacks   []string `yaml:"stacks"`
 	Weight   string   `yaml:"weight,omitempty"`
 	Contains []ContainedItem `yaml:"contains,omitempty"`
-	Requires Requirements    `yaml:"requires"`
-	Lotus    LotusMeta       `yaml:"lotus"`
+	Requires   Requirements    `yaml:"requires"`
+	Lotus      LotusMeta       `yaml:"lotus"`
+	Benchmarks []Benchmark     `yaml:"benchmarks,omitempty"`
+}
+
+type Benchmark struct {
+	Scenario string  `yaml:"scenario"`
+	TokensIn int     `yaml:"tokens_in"`
+	TokensOut int    `yaml:"tokens_out"`
+	WallTime int     `yaml:"wall_time_seconds"`
+	Quality  float64 `yaml:"quality_score"`
 }
 
 type Source struct {
@@ -181,6 +190,17 @@ func (c *Catalog) PrintShow(id string) error {
 	}
 	if e.Lotus.Notes != "" {
 		fmt.Printf("Notes:     %s\n", e.Lotus.Notes)
+	}
+
+	if len(e.Benchmarks) > 0 {
+		fmt.Printf("\nBenchmarks:\n")
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+		fmt.Fprintf(w, "  SCENARIO\tTOKENS IN\tTOKENS OUT\tTIME\tQUALITY\n")
+		for _, b := range e.Benchmarks {
+			fmt.Fprintf(w, "  %s\t%dk\t%dk\t%ds\t%.1f/5\n",
+				b.Scenario, b.TokensIn/1000, b.TokensOut/1000, b.WallTime, b.Quality)
+		}
+		w.Flush()
 	}
 
 	return nil

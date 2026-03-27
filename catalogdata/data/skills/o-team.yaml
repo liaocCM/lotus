@@ -1,0 +1,30 @@
+id: o-team
+kind: skill
+name: "O-Team"
+source:
+  registry: github
+  repo: "chemistrywow31/O-Team"
+  url: "https://github.com/chemistrywow31/O-Team"
+use_cases:
+  - multi-team-orchestration
+  - pipeline-management
+stacks: []
+requires:
+  tools: []
+  mcp_servers: []
+  runtime:
+    - "python>=3.10"
+    - "pyyaml"
+lotus:
+  tier: recommended
+  notes: "Orchestrates sequential multi-team AI pipelines with file handoffs and human review gates."
+  conflicts_with: []
+  pairs_well_with:
+    - a-team
+    - d-team
+benchmarks:
+  - scenario: s4-multi-team-pipeline
+    tokens_in: 10000
+    tokens_out: 7000
+    wall_time_seconds: 45
+    quality_score: 4.3

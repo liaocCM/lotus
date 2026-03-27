@@ -96,6 +96,24 @@ func Recommend(profile *analyzer.ProjectProfile, cat *catalog.Catalog) *Recommen
 			score *= 0.9
 		}
 
+		// benchmark factor: if entry has benchmark data, use quality/token efficiency
+		if len(e.Benchmarks) > 0 {
+			var totalQuality float64
+			var totalTokens float64
+			for _, b := range e.Benchmarks {
+				totalQuality += b.Quality
+				totalTokens += float64(b.TokensIn + b.TokensOut)
+			}
+			avgQuality := totalQuality / float64(len(e.Benchmarks))
+			avgTokens := totalTokens / float64(len(e.Benchmarks))
+			// efficiency = quality per 10k tokens, normalized to a multiplier around 1.0
+			efficiency := avgQuality / (avgTokens / 10000)
+			benchmarkFactor := 0.5 + (efficiency * 0.5) // scale so efficiency ~1.0 maps to factor ~1.0
+			score *= benchmarkFactor
+			reasons = append(reasons, fmt.Sprintf("benchmark: %.1f quality, %dk avg tokens, %.2f efficiency",
+				avgQuality, int(avgTokens)/1000, efficiency))
+		}
+
 		if score > 0 {
 			reason := strings.Join(reasons, "; ")
 			candidates = append(candidates, scored{entry: e, score: score, reason: reason})

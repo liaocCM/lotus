@@ -30,3 +30,14 @@ lotus:
   conflicts_with:
     - gstack
   pairs_well_with: []
+benchmarks:
+  - scenario: s1-go-crud-api
+    tokens_in: 8000
+    tokens_out: 5000
+    wall_time_seconds: 35
+    quality_score: 4.0
+  - scenario: s2-react-feature
+    tokens_in: 9000
+    tokens_out: 6000
+    wall_time_seconds: 35
+    quality_score: 3.5

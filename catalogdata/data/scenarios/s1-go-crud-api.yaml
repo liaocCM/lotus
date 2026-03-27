@@ -1,0 +1,27 @@
+id: s1-go-crud-api
+name: "Go Backend API (CRUD + Tests)"
+description: "Implement a complete CRUD API endpoint for a 'products' resource with pagination, tests, and error handling in a Go + Gin + PostgreSQL project."
+category: backend-development
+difficulty: medium
+stack:
+  language: go
+  framework: gin
+  database: postgres
+prompt: "Add a complete CRUD API for a 'products' resource with pagination, input validation, error handling, and table-driven tests with >80% coverage."
+acceptance_criteria:
+  - "GET /api/products with pagination works"
+  - "POST /api/products creates a product with validation"
+  - "PUT /api/products/:id updates a product"
+  - "DELETE /api/products/:id deletes a product"
+  - "Tests exist with >80% coverage"
+  - "Error handling follows project conventions"
+quality_rubric:
+  correctness: "All acceptance criteria pass, no panics"
+  completeness: "All CRUD operations implemented, not just partial"
+  code_style: "Follows existing project conventions"
+  test_coverage: "Table-driven tests, edge cases covered"
+  efficiency: "No N+1 queries, proper indexing considered"
+competitors:
+  - superpowers
+  - gstack
+  - d-team

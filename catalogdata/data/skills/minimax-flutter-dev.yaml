@@ -19,3 +19,9 @@ lotus:
   conflicts_with:
     - minimax-rn-dev
   pairs_well_with: []
+benchmarks:
+  - scenario: s5-flutter-feature
+    tokens_in: 7000
+    tokens_out: 5000
+    wall_time_seconds: 30
+    quality_score: 4.2

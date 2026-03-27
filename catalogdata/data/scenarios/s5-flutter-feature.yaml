@@ -1,0 +1,23 @@
+id: s5-flutter-feature
+name: "Flutter Mobile Feature"
+description: "Add a pull-to-refresh list view with API integration, loading states, and error handling in a Flutter app."
+category: mobile-development
+difficulty: medium
+stack:
+  language: dart
+  framework: flutter
+prompt: "Add a pull-to-refresh product list screen that fetches from a REST API, shows loading/error states, and caches results locally."
+acceptance_criteria:
+  - "List view renders products from API"
+  - "Pull-to-refresh triggers API reload"
+  - "Loading spinner shown during fetch"
+  - "Error state with retry button"
+  - "Local cache for offline viewing"
+quality_rubric:
+  correctness: "All states render correctly"
+  completeness: "All 5 acceptance criteria met"
+  code_style: "Follows Flutter/Dart conventions"
+  test_coverage: "Widget tests for key states"
+  efficiency: "Efficient list rendering, proper disposal"
+competitors:
+  - minimax-flutter-dev
