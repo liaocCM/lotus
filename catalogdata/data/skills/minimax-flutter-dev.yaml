@@ -1,0 +1,21 @@
+id: minimax-flutter-dev
+kind: skill
+name: "MiniMax Flutter Dev"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - mobile-development
+stacks:
+  - dart
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Cross-platform mobile development with Flutter."
+  conflicts_with:
+    - minimax-rn-dev
+  pairs_well_with: []

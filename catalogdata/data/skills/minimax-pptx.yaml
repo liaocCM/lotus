@@ -1,0 +1,19 @@
+id: minimax-pptx
+kind: skill
+name: "MiniMax PowerPoint Generator"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - document-generation
+stacks: []
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "PowerPoint presentation generation."
+  conflicts_with: []
+  pairs_well_with: []

@@ -1,0 +1,21 @@
+id: minimax-docx
+kind: skill
+name: "MiniMax Word Generator"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - document-generation
+stacks: []
+requires:
+  tools: []
+  mcp_servers: []
+  runtime:
+    - dotnet
+lotus:
+  tier: recommended
+  notes: "Word document generation via C# and OpenXML."
+  conflicts_with: []
+  pairs_well_with:
+    - minimax-xlsx

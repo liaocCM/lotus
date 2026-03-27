@@ -1,0 +1,21 @@
+id: git-commit
+kind: skill
+name: "Git Commit Workflow"
+source:
+  registry: local
+  repo: "luxray"
+  url: ""
+use_cases:
+  - git-workflow
+  - commit-management
+stacks: []
+requires:
+  tools:
+    - git
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Git commit workflow skill. Stack-agnostic."
+  conflicts_with: []
+  pairs_well_with: []

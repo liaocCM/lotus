@@ -1,0 +1,33 @@
+id: gstack
+kind: bundle
+name: "gstack"
+source:
+  registry: github
+  repo: "garrytan/gstack"
+  url: "https://github.com/garrytan/gstack"
+use_cases:
+  - structured-dev-workflow
+  - planning
+  - build
+  - qa
+  - shipping
+  - retrospective
+stacks: []
+weight: heavy
+contains:
+  - kind: skill
+    count: 20
+  - kind: daemon
+    count: 1
+requires:
+  tools: []
+  mcp_servers: []
+  runtime:
+    - "bun>=1.0"
+    - playwright
+lotus:
+  tier: alternative
+  notes: "Virtual eng team workflow: plan -> build -> QA -> ship -> retro. Requires bun and playwright."
+  conflicts_with:
+    - superpowers
+  pairs_well_with: []

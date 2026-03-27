@@ -1,0 +1,27 @@
+id: agency-agents
+kind: source
+name: "Agency Agents"
+source:
+  registry: github
+  repo: "msitarzewski/agency-agents"
+  url: "https://github.com/msitarzewski/agency-agents"
+use_cases:
+  - agent-personas
+  - engineering
+  - design
+  - marketing
+  - sales
+  - qa
+  - game-dev
+  - spatial
+  - academic
+stacks: []
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "144 agent personas across 12+ divisions. Stack-agnostic."
+  conflicts_with: []
+  pairs_well_with: []

@@ -1,0 +1,22 @@
+id: minimax-fullstack-dev
+kind: skill
+name: "MiniMax Fullstack Dev"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - fullstack-development
+stacks:
+  - typescript
+  - javascript
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Fullstack development skill covering React frontend and API backends."
+  conflicts_with: []
+  pairs_well_with:
+    - minimax-frontend-dev

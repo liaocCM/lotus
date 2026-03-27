@@ -1,0 +1,20 @@
+id: minimax-ios-dev
+kind: skill
+name: "MiniMax iOS Dev"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - mobile-development
+stacks:
+  - swift
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "iOS native development with SwiftUI and UIKit."
+  conflicts_with: []
+  pairs_well_with: []

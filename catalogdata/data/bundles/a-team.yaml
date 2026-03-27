@@ -1,0 +1,29 @@
+id: a-team
+kind: bundle
+name: "A-Team"
+source:
+  registry: github
+  repo: "chemistrywow31/A-Team"
+  url: "https://github.com/chemistrywow31/A-Team"
+use_cases:
+  - custom-agent-generation
+  - team-composition
+  - meta-agent
+stacks: []
+weight: light
+contains:
+  - kind: skill
+    count: 10
+  - kind: agent
+    count: 6
+  - kind: rule
+    count: 7
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Meta-agent that generates custom agent teams via interview. Zero dependencies."
+  conflicts_with: []
+  pairs_well_with: []

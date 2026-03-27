@@ -1,0 +1,23 @@
+id: minimax-rn-dev
+kind: skill
+name: "MiniMax React Native Dev"
+source:
+  registry: github
+  repo: "MiniMax-AI/skills"
+  url: "https://github.com/MiniMax-AI/skills"
+use_cases:
+  - mobile-development
+stacks:
+  - typescript
+  - javascript
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Cross-platform mobile development with React Native and Expo."
+  conflicts_with:
+    - minimax-flutter-dev
+  pairs_well_with:
+    - minimax-frontend-dev

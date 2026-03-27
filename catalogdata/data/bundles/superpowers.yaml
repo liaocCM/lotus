@@ -1,0 +1,32 @@
+id: superpowers
+kind: bundle
+name: "Superpowers"
+source:
+  registry: github
+  repo: "obra/superpowers"
+  url: "https://github.com/obra/superpowers"
+use_cases:
+  - structured-dev-workflow
+  - brainstorm
+  - planning
+  - tdd
+  - code-review
+stacks: []
+weight: light
+contains:
+  - kind: skill
+    count: 14
+  - kind: hook
+    count: 1
+  - kind: agent
+    count: 1
+requires:
+  tools: []
+  mcp_servers: []
+  runtime: []
+lotus:
+  tier: recommended
+  notes: "Structured dev workflow: brainstorm -> plan -> TDD -> review. Zero dependencies, stack-agnostic."
+  conflicts_with:
+    - gstack
+  pairs_well_with: []
