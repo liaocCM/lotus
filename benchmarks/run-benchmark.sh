@@ -53,9 +53,23 @@ case "$TIER" in
     ;;
   C)
     TIER_NAME="single-skill"
-    # TODO: install a single relevant skill
-    echo "Tier C not yet configured for $SCENARIO"
-    exit 1
+    # Install a minimal Go backend skill
+    mkdir -p "$WORK_DIR/.claude/skills/go-backend"
+    cat > "$WORK_DIR/.claude/skills/go-backend/SKILL.md" << 'SKILLEOF'
+---
+name: go-backend
+description: Go backend development best practices
+---
+# Go Backend Development
+
+## Rules
+- Write idiomatic Go: short variable names, error returns, no panic
+- Use table-driven tests with descriptive subtest names
+- Handle edge cases: empty input, unicode, special characters
+- Prefer stdlib over external dependencies when possible
+- Run `go vet` and `go test -race` before finishing
+- Aim for >90% test coverage
+SKILLEOF
     ;;
   D)
     TIER_NAME="superpowers"
@@ -70,9 +84,13 @@ case "$TIER" in
     ;;
   E)
     TIER_NAME="d-team"
-    # TODO: install d-team
-    echo "Tier E not yet configured — clone d-team into .claude/"
-    exit 1
+    echo "Cloning D-Team..."
+    git clone --depth 1 https://github.com/chemistrywow31/D-Team.git /tmp/dteam-clone 2>/dev/null
+    # install .claude/ contents
+    cp -r /tmp/dteam-clone/.claude/* "$WORK_DIR/.claude/" 2>/dev/null || true
+    # also copy CLAUDE.md if exists
+    cp /tmp/dteam-clone/CLAUDE.md "$WORK_DIR/CLAUDE.md" 2>/dev/null || true
+    rm -rf /tmp/dteam-clone
     ;;
   *)
     echo "Unknown tier: $TIER (use A/B/C/D/E)"

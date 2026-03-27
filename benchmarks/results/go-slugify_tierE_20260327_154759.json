@@ -1,0 +1,16 @@
+{
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "coverage_pct": "100.0",
+  "test_func_count": "1",
+  "table_case_count": "10",
+  "scenario": "go-slugify",
+  "tier": "E",
+  "tier_name": "d-team",
+  "wall_time_seconds": 137,
+  "tokens_in": 132765,
+  "tokens_out": 615,
+  "cost_usd": 0.32180875,
+  "num_turns": 7
+}
