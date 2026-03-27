@@ -1,0 +1,31 @@
+id: s0-go-slugify
+name: "Go Slugify Function"
+description: "Write a URL slug conversion function with comprehensive table-driven tests. Trivial complexity — used as the pilot benchmark to validate the evaluation pipeline."
+category: backend-development
+difficulty: trivial
+complexity: trivial
+stack:
+  language: go
+prompt: "Write a stringutil.Slugify(s string) string function that converts a string to a URL-safe slug (lowercase, hyphens for spaces, strip non-alphanumeric). Include table-driven tests with at least 8 cases covering unicode, leading/trailing spaces, consecutive special chars, and empty string."
+acceptance_criteria:
+  - "stringutil/slugify.go exists and compiles"
+  - "stringutil/slugify_test.go exists with table-driven tests"
+  - "go test passes"
+  - "At least 8 test cases"
+  - "Slugify(\"Hello World!\") == \"hello-world\""
+  - "Slugify(\"\") == \"\""
+quality_rubric:
+  correctness: "All test cases pass, handles edge cases"
+  completeness: "8+ test cases covering all specified categories"
+  code_style: "Idiomatic Go, clear variable names"
+  test_coverage: ">90% coverage"
+  efficiency: "No unnecessary allocations or regex if simple loop suffices"
+tiers:
+  A: bare
+  B: native-subagents
+  C: single-go-skill
+  D: superpowers
+  E: d-team
+competitors:
+  - superpowers
+  - d-team
