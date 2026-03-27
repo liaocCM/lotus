@@ -17,6 +17,7 @@ TIER=${2:?Usage: run-benchmark.sh <scenario> <tier>}
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RESULTS_DIR="$SCRIPT_DIR/results"
 WORK_DIR=$(mktemp -d)
+CLAUDE_OUTPUT="$WORK_DIR/claude_output.json"
 
 mkdir -p "$RESULTS_DIR"
 
@@ -31,6 +32,12 @@ cp "$SCRIPT_DIR/prompts/$SCENARIO.txt" "$WORK_DIR/prompt.txt"
 
 # Copy verification script
 cp "$SCRIPT_DIR/verify-$SCENARIO.sh" "$WORK_DIR/verify.sh"
+
+# Init git repo (many skills expect git context)
+cd "$WORK_DIR"
+git init -q
+git add -A
+git commit -q -m "initial" --allow-empty
 
 # Set up .claude/ config based on tier
 mkdir -p "$WORK_DIR/.claude"
@@ -52,9 +59,14 @@ case "$TIER" in
     ;;
   D)
     TIER_NAME="superpowers"
-    # TODO: install superpowers
-    echo "Tier D not yet configured — clone superpowers into .claude/"
-    exit 1
+    echo "Cloning superpowers..."
+    git clone --depth 1 https://github.com/obra/superpowers.git /tmp/superpowers-clone 2>/dev/null
+    # install skills + hooks + agents into .claude/
+    cp -r /tmp/superpowers-clone/skills "$WORK_DIR/.claude/skills" 2>/dev/null || true
+    cp -r /tmp/superpowers-clone/hooks "$WORK_DIR/.claude/hooks" 2>/dev/null || true
+    cp -r /tmp/superpowers-clone/agents "$WORK_DIR/.claude/agents" 2>/dev/null || true
+    cp -r /tmp/superpowers-clone/commands "$WORK_DIR/.claude/commands" 2>/dev/null || true
+    rm -rf /tmp/superpowers-clone
     ;;
   E)
     TIER_NAME="d-team"
@@ -71,13 +83,11 @@ esac
 echo "Tier: $TIER ($TIER_NAME)"
 echo "Running Claude Code..."
 
-cd "$WORK_DIR"
-
 # Run Claude Code and capture timing
 START=$(date +%s)
 PROMPT=$(cat prompt.txt)
 
-claude -p "$PROMPT" --output-format json --dangerously-skip-permissions > /tmp/claude_output.json 2>&1 || true
+claude -p "$PROMPT" --output-format json --dangerously-skip-permissions > $CLAUDE_OUTPUT 2>&1 || true
 
 END=$(date +%s)
 WALL_TIME=$((END - START))
@@ -90,10 +100,10 @@ VERIFY_RESULT=$(bash verify.sh 2>/dev/null || echo '{"error": "verification fail
 
 # Extract token usage from Claude output
 # input_tokens + cache_creation + cache_read = total input context
-TOKENS_IN=$(jq -r '(.usage.input_tokens // 0) + (.usage.cache_creation_input_tokens // 0) + (.usage.cache_read_input_tokens // 0)' /tmp/claude_output.json 2>/dev/null || echo "0")
-TOKENS_OUT=$(jq -r '.usage.output_tokens // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
-COST_USD=$(jq -r '.total_cost_usd // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
-NUM_TURNS=$(jq -r '.num_turns // 0' /tmp/claude_output.json 2>/dev/null || echo "0")
+TOKENS_IN=$(jq -r '(.usage.input_tokens // 0) + (.usage.cache_creation_input_tokens // 0) + (.usage.cache_read_input_tokens // 0)' $CLAUDE_OUTPUT 2>/dev/null || echo "0")
+TOKENS_OUT=$(jq -r '.usage.output_tokens // 0' $CLAUDE_OUTPUT 2>/dev/null || echo "0")
+COST_USD=$(jq -r '.total_cost_usd // 0' $CLAUDE_OUTPUT 2>/dev/null || echo "0")
+NUM_TURNS=$(jq -r '.num_turns // 0' $CLAUDE_OUTPUT 2>/dev/null || echo "0")
 
 # Build final result
 RESULT=$(echo "$VERIFY_RESULT" | jq \
@@ -126,5 +136,11 @@ echo "$RESULT" | jq .
 echo ""
 echo "Saved to: $RESULT_FILE"
 
-# Cleanup
-rm -rf "$WORK_DIR"
+# Cleanup (skip if DEBUG=1)
+if [ "${DEBUG:-0}" = "1" ]; then
+  echo "DEBUG: work dir preserved at $WORK_DIR"
+  # Also copy claude output to results for inspection
+  cp "$CLAUDE_OUTPUT" "$RESULTS_DIR/${SCENARIO}_tier${TIER}_claude_output.json" 2>/dev/null || true
+else
+  rm -rf "$WORK_DIR"
+fi

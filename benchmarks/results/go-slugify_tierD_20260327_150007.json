@@ -1,0 +1,23 @@
+{
+  "build_success": false,
+  "error": "stringutil/slugify.go not found",
+  "scenario": "go-slugify",
+  "tier": "D",
+  "tier_name": "superpowers",
+  "wall_time_seconds": 37,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0,
+  "num_turns": 1
+}
+{
+  "error": "verification failed",
+  "scenario": "go-slugify",
+  "tier": "D",
+  "tier_name": "superpowers",
+  "wall_time_seconds": 37,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0,
+  "num_turns": 1
+}

@@ -1,0 +1,16 @@
+{
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "coverage_pct": "100.0",
+  "test_func_count": "1",
+  "table_case_count": "10",
+  "scenario": "go-slugify",
+  "tier": "B",
+  "tier_name": "native-subagents",
+  "wall_time_seconds": 50,
+  "tokens_in": 129332,
+  "tokens_out": 1902,
+  "cost_usd": 0.295999,
+  "num_turns": 8
+}
