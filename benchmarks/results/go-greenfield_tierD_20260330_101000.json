@@ -1,0 +1,17 @@
+{
+  "has_claude_md": "true",
+  "claude_md_lines": "73",
+  "agent_count": "3",
+  "skill_count": "19",
+  "rule_count": "0",
+  "build_success": "true",
+  "test_pass": "true",
+  "scenario": "go-greenfield",
+  "tier": "D",
+  "tier_name": "superpowers",
+  "wall_time_seconds": 454,
+  "tokens_in": 1443294,
+  "tokens_out": 23687,
+  "cost_usd": 1.6579322499999998,
+  "num_turns": 54
+}

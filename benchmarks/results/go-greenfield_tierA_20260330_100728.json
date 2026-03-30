@@ -1,0 +1,17 @@
+{
+  "has_claude_md": "true",
+  "claude_md_lines": "52",
+  "agent_count": "3",
+  "skill_count": "2",
+  "rule_count": "0",
+  "build_success": "true",
+  "test_pass": "true",
+  "scenario": "go-greenfield",
+  "tier": "A",
+  "tier_name": "bare",
+  "wall_time_seconds": 305,
+  "tokens_in": 605952,
+  "tokens_out": 12332,
+  "cost_usd": 0.8181355,
+  "num_turns": 34
+}

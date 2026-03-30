@@ -1,0 +1,17 @@
+{
+  "has_claude_md": "true",
+  "claude_md_lines": "51",
+  "agent_count": "3",
+  "skill_count": "2",
+  "rule_count": "0",
+  "build_success": "true",
+  "test_pass": "true",
+  "scenario": "go-greenfield",
+  "tier": "B",
+  "tier_name": "native-subagents",
+  "wall_time_seconds": 318,
+  "tokens_in": 685420,
+  "tokens_out": 13691,
+  "cost_usd": 0.90503825,
+  "num_turns": 37
+}

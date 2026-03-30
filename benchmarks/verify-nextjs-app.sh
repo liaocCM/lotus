@@ -20,10 +20,10 @@ else
 fi
 
 # Install deps
-npm install --silent 2>/dev/null
+npm install --silent > /dev/null 2>&1
 
 # TypeScript check
-if npx tsc --noEmit 2>/dev/null; then
+if npx tsc --noEmit > /dev/null 2>&1; then
   add_metric "build_success" "true"
   add_metric "first_try_compile" "true"
 else
@@ -32,7 +32,7 @@ else
 fi
 
 # Run tests
-if npx vitest run 2>/dev/null; then
+if npx vitest run > /dev/null 2>&1; then
   add_metric "test_pass" "true"
 else
   add_metric "test_pass" "false"
