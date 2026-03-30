@@ -190,7 +190,27 @@ func main() {
 	}
 	benchmarkCompareCmd.Flags().String("scenario", "", "Scenario ID to compare against (required)")
 
-	benchmarkCmd.AddCommand(benchmarkListCmd, benchmarkShowCmd, benchmarkCompareCmd)
+	benchmarkResultsCmd := &cobra.Command{
+		Use:   "results [scenario]",
+		Short: "Show benchmark results from local runs",
+		Args:  cobra.MaximumNArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			resultsDir, _ := cmd.Flags().GetString("dir")
+			scenarioFilter := ""
+			if len(args) > 0 {
+				scenarioFilter = args[0]
+			}
+			results, err := benchmark.LoadResults(resultsDir, scenarioFilter)
+			if err != nil {
+				return err
+			}
+			benchmark.PrintResults(results)
+			return nil
+		},
+	}
+	benchmarkResultsCmd.Flags().String("dir", "benchmarks/results", "Path to results directory")
+
+	benchmarkCmd.AddCommand(benchmarkListCmd, benchmarkShowCmd, benchmarkCompareCmd, benchmarkResultsCmd)
 	catalogCmd.AddCommand(catalogListCmd, catalogShowCmd)
 	rootCmd.AddCommand(analyzeCmd, recommendCmd, applyCmd, catalogCmd, benchmarkCmd)
 

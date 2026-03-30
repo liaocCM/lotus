@@ -1,0 +1,16 @@
+Implement the product CRUD handlers in internal/handler/. The store layer (internal/store/memory.go) and model (internal/model/product.go) are already provided. You need to:
+
+1. Implement RegisterRoutes in internal/handler/routes.go to wire up these endpoints:
+   - GET /api/products — list with pagination (query params: page, per_page, defaults 1 and 10)
+   - GET /api/products/:id — get single product by ID
+   - POST /api/products — create product (validate required fields)
+   - PUT /api/products/:id — update product
+   - DELETE /api/products/:id — delete product
+
+2. Create handler functions that use the MemoryStore from internal/store/
+
+3. Return proper HTTP status codes (200, 201, 400, 404)
+
+4. Write comprehensive tests in internal/handler/handler_test.go using httptest. Cover: list empty, create + list, get existing, get not found, update, delete, pagination, validation errors.
+
+Do not modify the existing model or store files.
