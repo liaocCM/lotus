@@ -1,0 +1,17 @@
+{
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "all_tests_pass": "true",
+  "coverage_pct": "89.6",
+  "test_func_count": "10",
+  "table_case_count": "0",
+  "scenario": "go-crud-api",
+  "tier": "D",
+  "tier_name": "superpowers",
+  "wall_time_seconds": 104,
+  "tokens_in": 276112,
+  "tokens_out": 6057,
+  "cost_usd": 0.47837650000000004,
+  "num_turns": 13
+}

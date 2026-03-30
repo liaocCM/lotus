@@ -2,7 +2,7 @@
 # Verification script for go-slugify benchmark
 # Outputs JSON metrics to stdout
 
-set -e
+set +e  # don't exit on error — capture all metrics
 
 RESULT="{}"
 add_metric() { RESULT=$(echo "$RESULT" | jq --arg k "$1" --arg v "$2" '. + {($k): $v}'); }

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Verification script for go-crud-api benchmark
 
-set -e
+set +e  # don't exit on error — capture all metrics even if some fail
 
 RESULT="{}"
 add_metric() { RESULT=$(echo "$RESULT" | jq --arg k "$1" --arg v "$2" '. + {($k): $v}'); }

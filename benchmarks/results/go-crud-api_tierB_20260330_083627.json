@@ -1,0 +1,17 @@
+{
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "all_tests_pass": "true",
+  "coverage_pct": "89.1",
+  "test_func_count": "13",
+  "table_case_count": "0",
+  "scenario": "go-crud-api",
+  "tier": "B",
+  "tier_name": "native-subagents",
+  "wall_time_seconds": 99,
+  "tokens_in": 306014,
+  "tokens_out": 6333,
+  "cost_usd": 0.4201619999999999,
+  "num_turns": 15
+}

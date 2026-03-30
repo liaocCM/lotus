@@ -37,13 +37,13 @@ lotus:
     - a-team
     - o-team
 benchmarks:
+  - scenario: s0-go-slugify
+    tokens_in: 132000
+    tokens_out: 600
+    wall_time_seconds: 137
+    quality_score: 5.0
   - scenario: s1-go-crud-api
-    tokens_in: 12000
-    tokens_out: 8000
-    wall_time_seconds: 50
+    tokens_in: 401000
+    tokens_out: 6000
+    wall_time_seconds: 101
     quality_score: 4.5
-  - scenario: s3-greenfield-bootstrap
-    tokens_in: 5000
-    tokens_out: 3000
-    wall_time_seconds: 20
-    quality_score: 3.8

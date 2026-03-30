@@ -1,0 +1,11 @@
+{
+  "error": "verification failed",
+  "scenario": "go-crud-api",
+  "tier": "B",
+  "tier_name": "native-subagents",
+  "wall_time_seconds": 88,
+  "tokens_in": 198848,
+  "tokens_out": 5466,
+  "cost_usd": 0.33384024999999995,
+  "num_turns": 13
+}

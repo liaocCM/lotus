@@ -1,0 +1,17 @@
+{
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "all_tests_pass": "true",
+  "coverage_pct": "91.1",
+  "test_func_count": "10",
+  "table_case_count": "0",
+  "scenario": "go-crud-api",
+  "tier": "C",
+  "tier_name": "single-skill",
+  "wall_time_seconds": 85,
+  "tokens_in": 230819,
+  "tokens_out": 5593,
+  "cost_usd": 0.3562655,
+  "num_turns": 14
+}

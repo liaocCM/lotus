@@ -1,0 +1,11 @@
+{
+  "error": "verification failed",
+  "scenario": "go-crud-api",
+  "tier": "A",
+  "tier_name": "bare",
+  "wall_time_seconds": 106,
+  "tokens_in": 150619,
+  "tokens_out": 5487,
+  "cost_usd": 0.37836775,
+  "num_turns": 11
+}
