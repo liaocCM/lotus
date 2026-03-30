@@ -18,6 +18,7 @@ func Analyze(root string) (*ProjectProfile, error) {
 	}
 
 	profile.ExistingConfig = scanExistingConfig(absRoot)
+	profile.Complexity = EstimateComplexity(absRoot)
 
 	return profile, nil
 }

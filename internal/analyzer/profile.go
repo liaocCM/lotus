@@ -3,6 +3,7 @@ package analyzer
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"text/tabwriter"
 )
@@ -29,6 +30,18 @@ type ProjectProfile struct {
 	Path           string         `yaml:"path"`
 	Stacks         []Stack        `yaml:"stacks"`
 	ExistingConfig ExistingConfig `yaml:"existing_config"`
+	Complexity     Complexity     `yaml:"complexity"`
+}
+
+// Complexity represents the estimated project complexity.
+// Derived from file count, directory depth, dependency count, etc.
+type Complexity struct {
+	Level      string `yaml:"level"`       // trivial, small, medium, large
+	FileCount  int    `yaml:"file_count"`
+	DirCount   int    `yaml:"dir_count"`
+	DepCount   int    `yaml:"dep_count"`   // dependencies in go.mod/package.json
+	HasTests   bool   `yaml:"has_tests"`
+	IsMonorepo bool   `yaml:"is_monorepo"`
 }
 
 func (p *ProjectProfile) PrimaryLanguage() string {
@@ -138,7 +151,153 @@ func (p *ProjectProfile) Print() {
 	fmt.Printf("  Rules:        %s\n", formatList(p.ExistingConfig.Rules))
 
 	fmt.Println()
+	fmt.Printf("Complexity:     %s (%d files, %d dirs, %d deps)\n",
+		p.Complexity.Level, p.Complexity.FileCount, p.Complexity.DirCount, p.Complexity.DepCount)
 	fmt.Printf("Inferred use cases: %s\n", strings.Join(p.InferUseCases(), ", "))
+}
+
+// EstimateComplexity scans the project to determine its complexity level.
+func EstimateComplexity(root string) Complexity {
+	c := Complexity{}
+
+	// count source files and directories
+	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return nil
+		}
+		// skip hidden dirs, vendor, node_modules
+		name := info.Name()
+		if info.IsDir() && (strings.HasPrefix(name, ".") || name == "vendor" || name == "node_modules") {
+			return filepath.SkipDir
+		}
+		if info.IsDir() {
+			c.DirCount++
+			return nil
+		}
+		// count source files by extension
+		ext := filepath.Ext(name)
+		switch ext {
+		case ".go", ".ts", ".tsx", ".js", ".jsx", ".py", ".rs", ".dart", ".kt", ".swift":
+			c.FileCount++
+		}
+		return nil
+	})
+
+	// count dependencies
+	c.DepCount = countDeps(root)
+
+	// check for tests
+	c.HasTests = hasTestFiles(root)
+
+	// check for monorepo indicators
+	c.IsMonorepo = isMonorepo(root)
+
+	// classify
+	switch {
+	case c.FileCount <= 5 && c.DepCount <= 3:
+		c.Level = "trivial"
+	case c.FileCount <= 20 && c.DepCount <= 10:
+		c.Level = "small"
+	case c.FileCount <= 100 && c.DepCount <= 50:
+		c.Level = "medium"
+	default:
+		c.Level = "large"
+	}
+
+	// monorepos bump up one level
+	if c.IsMonorepo && c.Level != "large" {
+		switch c.Level {
+		case "trivial":
+			c.Level = "small"
+		case "small":
+			c.Level = "medium"
+		case "medium":
+			c.Level = "large"
+		}
+	}
+
+	return c
+}
+
+func countDeps(root string) int {
+	count := 0
+	// go.mod
+	if data, err := os.ReadFile(filepath.Join(root, "go.mod")); err == nil {
+		for _, line := range strings.Split(string(data), "\n") {
+			line = strings.TrimSpace(line)
+			if strings.HasPrefix(line, "require") || strings.Contains(line, "//") || line == "" || line == ")" {
+				continue
+			}
+			if strings.Contains(line, "/") {
+				count++
+			}
+		}
+	}
+	// package.json
+	if data, err := os.ReadFile(filepath.Join(root, "package.json")); err == nil {
+		// rough count: each line with ":" in dependencies sections
+		content := string(data)
+		for _, section := range []string{"dependencies", "devDependencies"} {
+			idx := strings.Index(content, `"`+section+`"`)
+			if idx < 0 {
+				continue
+			}
+			block := content[idx:]
+			end := strings.Index(block, "}")
+			if end > 0 {
+				lines := strings.Split(block[:end], "\n")
+				for _, l := range lines {
+					if strings.Contains(l, ":") && strings.Contains(l, `"`) {
+						count++
+					}
+				}
+			}
+		}
+	}
+	return count
+}
+
+func hasTestFiles(root string) bool {
+	found := false
+	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil || info.IsDir() {
+			return nil
+		}
+		name := info.Name()
+		if strings.HasSuffix(name, "_test.go") || strings.HasSuffix(name, ".test.ts") ||
+			strings.HasSuffix(name, ".test.tsx") || strings.HasSuffix(name, ".spec.ts") ||
+			strings.Contains(name, "test_") {
+			found = true
+			return filepath.SkipAll
+		}
+		return nil
+	})
+	return found
+}
+
+func isMonorepo(root string) bool {
+	// check for multiple go.mod, lerna.json, pnpm-workspace.yaml, etc.
+	indicators := []string{"lerna.json", "pnpm-workspace.yaml", "nx.json", "turbo.json"}
+	for _, f := range indicators {
+		if _, err := os.Stat(filepath.Join(root, f)); err == nil {
+			return true
+		}
+	}
+	// multiple go.mod files
+	goModCount := 0
+	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return nil
+		}
+		if info.Name() == "go.mod" {
+			goModCount++
+			if goModCount > 1 {
+				return filepath.SkipAll
+			}
+		}
+		return nil
+	})
+	return goModCount > 1
 }
 
 func formatList(items []string) string {

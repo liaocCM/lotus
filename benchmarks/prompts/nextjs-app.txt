@@ -1,0 +1,10 @@
+Create a reusable DataTable component at src/components/DataTable.tsx with these features:
+1. Accepts an array of data objects and column definitions as props
+2. Search/filter bar that filters rows in real-time
+3. Clickable column headers for ascending/descending sort
+4. Pagination with configurable page size (default 10)
+5. Responsive design using Tailwind CSS
+
+Also create comprehensive tests at src/components/DataTable.test.tsx using vitest and @testing-library/react. Cover: rendering with data, search filtering, column sorting, pagination navigation, empty state, and responsive behavior.
+
+Do not modify package.json or vitest.config.ts.

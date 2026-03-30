@@ -88,12 +88,36 @@ func Recommend(profile *analyzer.ProjectProfile, cat *catalog.Catalog) *Recommen
 			score *= 1.0
 		}
 
-		// weight penalty for heavy bundles
+		// complexity-aware weight penalty
+		// heavy bundles are penalized more on simpler projects
+		complexity := profile.Complexity.Level
 		switch e.Weight {
 		case "heavy":
-			score *= 0.7
+			switch complexity {
+			case "trivial":
+				score *= 0.3 // heavy overkill for trivial
+			case "small":
+				score *= 0.5
+			case "medium":
+				score *= 0.8
+			default: // large
+				score *= 1.0 // heavy is justified
+			}
 		case "medium":
-			score *= 0.9
+			switch complexity {
+			case "trivial":
+				score *= 0.5
+			case "small":
+				score *= 0.7
+			default:
+				score *= 0.9
+			}
+		}
+
+		// complexity bonus: bundles with many agents get a boost on larger projects
+		if e.Kind == "bundle" && (complexity == "medium" || complexity == "large") {
+			score *= 1.2
+			reasons = append(reasons, fmt.Sprintf("bundle benefits %s project", complexity))
 		}
 
 		// benchmark factor: if entry has benchmark data, use quality/token efficiency
@@ -106,11 +130,10 @@ func Recommend(profile *analyzer.ProjectProfile, cat *catalog.Catalog) *Recommen
 			}
 			avgQuality := totalQuality / float64(len(e.Benchmarks))
 			avgTokens := totalTokens / float64(len(e.Benchmarks))
-			// efficiency = quality per 10k tokens, normalized to a multiplier around 1.0
 			efficiency := avgQuality / (avgTokens / 10000)
-			benchmarkFactor := 0.5 + (efficiency * 0.5) // scale so efficiency ~1.0 maps to factor ~1.0
+			benchmarkFactor := 0.5 + (efficiency * 0.5)
 			score *= benchmarkFactor
-			reasons = append(reasons, fmt.Sprintf("benchmark: %.1f quality, %dk avg tokens, %.2f efficiency",
+			reasons = append(reasons, fmt.Sprintf("benchmark: %.1f quality, %dk avg tokens, %.2f eff",
 				avgQuality, int(avgTokens)/1000, efficiency))
 		}
 
@@ -155,7 +178,11 @@ func (r *Recommendations) Print() {
 	}
 
 	fmt.Printf("Recommendations for %s\n", r.Profile.Path)
-	fmt.Printf("Detected: %s\n\n", strings.Join(r.Profile.Languages(), ", "))
+	fmt.Printf("Detected: %s | Complexity: %s (%d files, %d deps)\n\n",
+		strings.Join(r.Profile.Languages(), ", "),
+		r.Profile.Complexity.Level,
+		r.Profile.Complexity.FileCount,
+		r.Profile.Complexity.DepCount)
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	fmt.Fprintf(w, "  SCORE\tACTION\tKIND\tID\tREASON\n")
