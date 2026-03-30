@@ -47,3 +47,13 @@ benchmarks:
     tokens_out: 6000
     wall_time_seconds: 101
     quality_score: 4.5
+  - scenario: s2-nextjs-app
+    tokens_in: 879000
+    tokens_out: 9500
+    wall_time_seconds: 220
+    quality_score: 5.0
+  - scenario: s3-go-greenfield
+    tokens_in: 1705000
+    tokens_out: 29000
+    wall_time_seconds: 581
+    quality_score: 3.5
