@@ -1,0 +1,19 @@
+{
+  "has_component": "true",
+  "has_tests": "true",
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "test_case_count": "54",
+  "has_search": "true",
+  "has_sort": "true",
+  "has_pagination": "true",
+  "scenario": "nextjs-app",
+  "tier": "A",
+  "tier_name": "bare",
+  "wall_time_seconds": 216,
+  "tokens_in": 767405,
+  "tokens_out": 11210,
+  "cost_usd": 0.8750965,
+  "num_turns": 27
+}

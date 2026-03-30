@@ -1,0 +1,19 @@
+{
+  "has_component": "true",
+  "has_tests": "true",
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "test_case_count": "68",
+  "has_search": "true",
+  "has_sort": "true",
+  "has_pagination": "true",
+  "scenario": "nextjs-app",
+  "tier": "E",
+  "tier_name": "d-team",
+  "wall_time_seconds": 220,
+  "tokens_in": 879466,
+  "tokens_out": 9453,
+  "cost_usd": 0.9562235,
+  "num_turns": 20
+}

@@ -1,0 +1,19 @@
+{
+  "has_component": "true",
+  "has_tests": "true",
+  "build_success": "false",
+  "first_try_compile": "false",
+  "test_pass": "true",
+  "test_case_count": "52",
+  "has_search": "true",
+  "has_sort": "true",
+  "has_pagination": "true",
+  "scenario": "nextjs-app",
+  "tier": "B",
+  "tier_name": "native-subagents",
+  "wall_time_seconds": 221,
+  "tokens_in": 446266,
+  "tokens_out": 10195,
+  "cost_usd": 0.6483087500000001,
+  "num_turns": 19
+}

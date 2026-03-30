@@ -1,0 +1,19 @@
+{
+  "has_component": "true",
+  "has_tests": "true",
+  "build_success": "true",
+  "first_try_compile": "true",
+  "test_pass": "true",
+  "test_case_count": "39",
+  "has_search": "true",
+  "has_sort": "true",
+  "has_pagination": "true",
+  "scenario": "nextjs-app",
+  "tier": "D",
+  "tier_name": "superpowers",
+  "wall_time_seconds": 196,
+  "tokens_in": 570218,
+  "tokens_out": 8664,
+  "cost_usd": 0.6670539999999999,
+  "num_turns": 20
+}
